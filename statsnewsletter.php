@@ -34,6 +34,10 @@ class StatsNewsletter extends ModuleGraph
 	private $_query2 = '';
 	private $_option = '';
 
+	private $table_name;
+	private $newsletter_module_name;
+	private $newsletter_module_human_readable_name;
+
 	public function __construct()
 	{
 		$this->name = 'statsnewsletter';
@@ -41,6 +45,16 @@ class StatsNewsletter extends ModuleGraph
 		$this->version = '1.4.0';
 		$this->author = 'PrestaShop';
 		$this->need_instance = 0;
+
+		if (version_compare(_PS_VERSION_, '1.7.0.0', '>=')) {
+			$this->table_name = _DB_PREFIX_ . 'emailsubscription';
+			$this->newsletter_module_name = 'ps_emailsubscription';
+			$this->newsletter_module_human_readable_name = 'Email subscription';
+		} else {
+			$this->table_name = _DB_PREFIX_ . 'newsletter';
+			$this->newsletter_module_name = 'blocknewsletter';
+			$this->newsletter_module_human_readable_name = 'Newsletter block';
+		}
 
 		parent::__construct();
 
@@ -56,7 +70,7 @@ class StatsNewsletter extends ModuleGraph
 
 	public function hookAdminStatsModules($params)
 	{
-		if (Module::isInstalled('blocknewsletter'))
+		if (Module::isInstalled($this->newsletter_module_name))
 		{
 			$totals = $this->getTotals();
 			if (Tools::getValue('export'))
@@ -85,7 +99,7 @@ class StatsNewsletter extends ModuleGraph
 			</div>';
 		}
 		else
-			$this->_html = '<p>'.$this->l('The "Newsletter block" module must be installed.').'</p>';
+			$this->_html = '<p>'.$this->l('The "' . $this->newsletter_module_human_readable_name . '" module must be installed.').'</p>';
 
 		return $this->_html;
 	}
@@ -100,7 +114,7 @@ class StatsNewsletter extends ModuleGraph
 		$result1 = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
 
 		$sql = 'SELECT COUNT(*) as visitors
-				FROM '._DB_PREFIX_.'newsletter
+				FROM ' . $this->table_name . '
 				WHERE 1
 				   '.Shop::addSqlRestriction().'
 					AND `newsletter_date_add` BETWEEN '.ModuleGraph::getDateBetween();
@@ -122,7 +136,7 @@ class StatsNewsletter extends ModuleGraph
 					AND `newsletter_date_add` BETWEEN ';
 
 		$this->_query2 = 'SELECT newsletter_date_add
-				FROM '._DB_PREFIX_.'newsletter
+				FROM ' . $this->table_name . '
 				WHERE 1
 					'.Shop::addSqlRestriction(Shop::SHARE_CUSTOMER).'
 					AND `newsletter_date_add` BETWEEN ';
