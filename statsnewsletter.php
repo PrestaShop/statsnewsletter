@@ -43,25 +43,19 @@ class statsnewsletter extends ModuleGraph
     {
         $this->name = 'statsnewsletter';
         $this->tab = 'analytics_stats';
-        $this->version = '1.4.1';
+        $this->version = '2.0.0';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
 
-        if (version_compare(_PS_VERSION_, '1.7.0.0', '>=')) {
-            $this->table_name = _DB_PREFIX_ . 'emailsubscription';
-            $this->newsletter_module_name = 'ps_emailsubscription';
-            $this->newsletter_module_human_readable_name = 'Email subscription';
-        } else {
-            $this->table_name = _DB_PREFIX_ . 'newsletter';
-            $this->newsletter_module_name = 'blocknewsletter';
-            $this->newsletter_module_human_readable_name = 'Newsletter block';
-        }
+        $this->table_name = _DB_PREFIX_ . 'emailsubscription';
+        $this->newsletter_module_name = 'ps_emailsubscription';
+        $this->newsletter_module_human_readable_name = 'Email subscription';
 
         parent::__construct();
 
-        $this->displayName = $this->l('Newsletter');
-        $this->description = $this->l('Adds a tab with a graph showing newsletter registrations to the Stats dashboard.');
-        $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
+        $this->displayName = $this->trans('Newsletter', array(), 'Modules.Statsnewsletter.Admin');
+        $this->description = $this->trans('Adds a tab with a graph showing newsletter registrations to the Stats dashboard.', array(), 'Modules.Statsnewsletter.Admin');
+        $this->ps_versions_compliancy = array('min' => '1.7.0.0', 'max' => _PS_VERSION_);
     }
 
     public function install()
@@ -87,19 +81,19 @@ class statsnewsletter extends ModuleGraph
 					</div>
 					<div class="col-lg-4">
 						<ul class="list-unstyled">
-							<li>'.$this->l('Customer registrations:').' '.(int)$totals['customers'].'</li>
-							<li>'.$this->l('Visitor registrations: ').' '.(int)$totals['visitors'].'</li>
-							<li>'.$this->l('Both:').' '.(int)$totals['both'].'</li>
+							<li>'.$this->trans('Customer registrations:', array(), 'Modules.Statsnewsletter.Admin').' '.(int)$totals['customers'].'</li>
+							<li>'.$this->trans('Visitor registrations: ', array(), 'Modules.Statsnewsletter.Admin').' '.(int)$totals['visitors'].'</li>
+							<li>'.$this->trans('Both:', array(), 'Modules.Statsnewsletter.Admin').' '.(int)$totals['both'].'</li>
 						</ul>
 						<hr/>
 						<a class="btn btn-default export-csv" href="'.Tools::safeOutput($_SERVER['REQUEST_URI'].'&export=1').'">
-							<i class="icon-cloud-upload"></i> '.$this->l('CSV Export').'
+							<i class="icon-cloud-upload"></i> '.$this->trans('CSV Export', array(), 'Modules.Statsnewsletter.Admin').'
 						</a>
 					</div>
 				</div>
 			</div>';
         } else {
-            $this->_html = '<p>'.$this->l('The "' . $this->newsletter_module_human_readable_name . '" module must be installed.').'</p>';
+            $this->_html = '<p>'.$this->trans('The %s module must be installed.', array($this->newsletter_module_human_readable_name), 'Modules.Statsnewsletter.Admin').'</p>';
         }
 
         return $this->_html;
@@ -125,10 +119,10 @@ class statsnewsletter extends ModuleGraph
 
     protected function getData($layers)
     {
-        $this->_titles['main'][0] = $this->l('Newsletter statistics');
-        $this->_titles['main'][1] = $this->l('customers');
-        $this->_titles['main'][2] = $this->l('Visitors');
-        $this->_titles['main'][3] = $this->l('Both');
+        $this->_titles['main'][0] = $this->trans('Newsletter statistics', array(), 'Modules.Statsnewsletter.Admin');
+        $this->_titles['main'][1] = $this->trans('customers', array(), 'Admin.Global');
+        $this->_titles['main'][2] = $this->trans('Visitors', array(), 'Admin.ShopParameters.Feature');
+        $this->_titles['main'][3] = $this->trans('Both', array(), 'Admin.AdvParameters.Feature');
 
         $this->_query = 'SELECT newsletter_date_add
 				FROM `'._DB_PREFIX_.'customer`
