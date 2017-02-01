@@ -121,8 +121,8 @@ class statsnewsletter extends ModuleGraph
     {
         $this->_titles['main'][0] = $this->trans('Newsletter statistics', array(), 'Modules.Statsnewsletter.Admin');
         $this->_titles['main'][1] = $this->trans('customers', array(), 'Admin.Global');
-        $this->_titles['main'][2] = $this->trans('Visitors', array(), 'Admin.ShopParameters.Feature');
-        $this->_titles['main'][3] = $this->trans('Both', array(), 'Admin.AdvParameters.Feature');
+        $this->_titles['main'][2] = $this->trans('Visitors', array(), 'Admin.Shopparameters.Feature');
+        $this->_titles['main'][3] = $this->trans('Both', array(), 'Admin.Advparameters.Feature');
 
         $this->_query = 'SELECT newsletter_date_add
 				FROM `'._DB_PREFIX_.'customer`
