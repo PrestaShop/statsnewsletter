@@ -54,7 +54,7 @@ class statsnewsletter extends ModuleGraph
         parent::__construct();
 
         $this->displayName = $this->trans('Newsletter', array(), 'Admin.Global');
-        $this->description = $this->trans('Adds a tab with a graph showing newsletter registrations to the Stats dashboard.', array(), 'Modules.Statsnewsletter.Admin');
+        $this->description = $this->trans('Enrich your stats, display a graph showing newsletter registrations.', array(), 'Modules.Statsnewsletter.Admin');
         $this->ps_versions_compliancy = array('min' => '1.7.1.0', 'max' => _PS_VERSION_);
     }
 
