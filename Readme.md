@@ -2,7 +2,7 @@
 
 ## About
 
-Adds a tab with a graph showing newsletter registrations to the Stats dashboard.
+Enrich your stats, display a graph showing newsletter registrations.
 
 ## Reporting issues
 
