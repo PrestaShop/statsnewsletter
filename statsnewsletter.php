@@ -43,7 +43,7 @@ class statsnewsletter extends ModuleGraph
     {
         $this->name = 'statsnewsletter';
         $this->tab = 'analytics_stats';
-        $this->version = '2.0.2';
+        $this->version = '2.0.3';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
 
@@ -60,10 +60,10 @@ class statsnewsletter extends ModuleGraph
 
     public function install()
     {
-        return (parent::install() && $this->registerHook('AdminStatsModules'));
+        return (parent::install() && $this->registerHook('displayAdminStatsModules'));
     }
 
-    public function hookAdminStatsModules($params)
+    public function hookDisplayAdminStatsModules($params)
     {
         if (Module::isInstalled($this->newsletter_module_name)) {
             $totals = $this->getTotals();
