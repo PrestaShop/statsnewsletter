@@ -105,14 +105,14 @@ class statsnewsletter extends ModuleGraph
 				WHERE 1
 					' . Shop::addSqlRestriction(Shop::SHARE_CUSTOMER) . '
 					AND `newsletter_date_add` BETWEEN ' . ModuleGraph::getDateBetween();
-        $result1 = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
+        $result1 = Db::getInstance((bool) _PS_USE_SQL_SLAVE_)->getRow($sql);
 
         $sql = 'SELECT COUNT(*) as visitors
 				FROM ' . $this->table_name . '
 				WHERE 1
 				   ' . Shop::addSqlRestriction() . '
 					AND `newsletter_date_add` BETWEEN ' . ModuleGraph::getDateBetween();
-        $result2 = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
+        $result2 = Db::getInstance((bool) _PS_USE_SQL_SLAVE_)->getRow($sql);
 
         return ['customers' => $result1['customers'], 'visitors' => $result2['visitors'], 'both' => $result1['customers'] + $result2['visitors']];
     }
@@ -140,8 +140,8 @@ class statsnewsletter extends ModuleGraph
 
     protected function setAllTimeValues($layers)
     {
-        $result1 = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($this->_query . $this->getDate());
-        $result2 = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($this->_query2 . $this->getDate());
+        $result1 = Db::getInstance((bool) _PS_USE_SQL_SLAVE_)->executeS($this->_query . $this->getDate());
+        $result2 = Db::getInstance((bool) _PS_USE_SQL_SLAVE_)->executeS($this->_query2 . $this->getDate());
         foreach ($result1 as $row) {
             ++$this->_values[0][(int) substr($row['newsletter_date_add'], 0, 4)];
         }
@@ -157,8 +157,8 @@ class statsnewsletter extends ModuleGraph
 
     protected function setYearValues($layers)
     {
-        $result1 = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($this->_query . $this->getDate());
-        $result2 = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($this->_query2 . $this->getDate());
+        $result1 = Db::getInstance((bool) _PS_USE_SQL_SLAVE_)->executeS($this->_query . $this->getDate());
+        $result2 = Db::getInstance((bool) _PS_USE_SQL_SLAVE_)->executeS($this->_query2 . $this->getDate());
         foreach ($result1 as $row) {
             ++$this->_values[0][(int) substr($row['newsletter_date_add'], 5, 2)];
         }
@@ -174,8 +174,8 @@ class statsnewsletter extends ModuleGraph
 
     protected function setMonthValues($layers)
     {
-        $result1 = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($this->_query . $this->getDate());
-        $result2 = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($this->_query2 . $this->getDate());
+        $result1 = Db::getInstance((bool) _PS_USE_SQL_SLAVE_)->executeS($this->_query . $this->getDate());
+        $result2 = Db::getInstance((bool) _PS_USE_SQL_SLAVE_)->executeS($this->_query2 . $this->getDate());
         foreach ($result1 as $row) {
             ++$this->_values[0][(int) substr($row['newsletter_date_add'], 8, 2)];
         }
@@ -191,8 +191,8 @@ class statsnewsletter extends ModuleGraph
 
     protected function setDayValues($layers)
     {
-        $result1 = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($this->_query . $this->getDate());
-        $result2 = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($this->_query2 . $this->getDate());
+        $result1 = Db::getInstance((bool) _PS_USE_SQL_SLAVE_)->executeS($this->_query . $this->getDate());
+        $result2 = Db::getInstance((bool) _PS_USE_SQL_SLAVE_)->executeS($this->_query2 . $this->getDate());
         foreach ($result1 as $row) {
             ++$this->_values[0][(int) substr($row['newsletter_date_add'], 11, 2)];
         }
